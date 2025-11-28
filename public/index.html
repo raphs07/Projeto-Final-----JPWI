@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f9dada; 
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 25px;
+            width: 350px;
+            border-radius: 12px;
+            box-shadow: 0px 0px 12px rgba(150, 0, 0, 0.3);
+            border: 2px solid #b30000; 
+            text-align: center;
+        }
+
+        h2 {
+            color: #b30000; 
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 90%;
+            padding: 8px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border: 1px solid #b30000;
+            outline: none;
+        }
+
+        input:focus {
+            border: 2px solid #ff4d4d; 
+        }
+
+        button {
+            width: 95%;
+            padding: 10px;
+            background: #b30000;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #ff4d4d;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Cadastro</h2>
+
+        <form id="userForm">
+            <input type="hidden" id="id" />
+
+            <input type="text" id="nome_completo" placeholder="Nome Completo" required />
+            <input type="text" id="cpf" placeholder="CPF" required />
+            <input type="date" id="data_nascimento" placeholder ="Data de Nascimento" required />
+            <input type="text" id="telefone" placeholder="Telefone" required />
+            <input type="email" id="email" placeholder="Email" required />
+            <input type="password" id="senha" placeholder="Senha" required />
+
+            <button type="submit">Salvar Cadastro</button>
+        </form>
+    </div>
+
+    <script>
+        const API_URL = "http://localhost:3000/usuarios";
+
+        async function salvarCadastro(e) {
+            e.preventDefault();
+
+            const data = {
+                nome_completo: document.getElementById("nome_completo").value,
+                cpf: document.getElementById("cpf").value,
+                data_nascimento: document.getElementById("data_nascimento").value,
+                telefone: document.getElementById("telefone").value,
+                email: document.getElementById("email").value,
+                senha: document.getElementById("senha").value,
+            };
+
+            await fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
+            });
+
+            alert("Cadastro realizado com sucesso!");
+            document.getElementById("userForm").reset();
+        }
+
+        document.getElementById("userForm").addEventListener("submit", salvarCadastro);
+    </script>
+
+</body>
+</html>
